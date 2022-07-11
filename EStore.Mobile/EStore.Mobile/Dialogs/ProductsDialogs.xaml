@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EStore.Mobile.Dialogs.ProductsDialogs">
+
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition/>
+            <RowDefinition/>
+
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+             
+            </Grid.ColumnDefinitions>
+
+            <Entry Grid.Column="0" Text="Product Name"></Entry>
+            <Entry Grid.Column="1" Text="{Binding Path= name, Mode=TwoWay}"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Entry Grid.Column="0" Text="Product Description"></Entry>
+            <Entry Grid.Column="1" Text="{Binding Path= description, Mode=TwoWay}"/>
+        </Grid>
+
+    </Grid>
+</ContentPage>

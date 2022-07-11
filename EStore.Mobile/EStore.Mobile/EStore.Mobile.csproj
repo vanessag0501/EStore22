@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Library.EStore" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Dialogs\" />
+    <None Remove="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Library.EStore">
+      <HintPath>..\..\Library.EStore\bin\Debug\net6.0\Library.EStore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dialogs\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Dialogs\CartDialogs.xaml.cs">
+      <DependentUpon>CartDialogs.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Dialogs\ProductsDialogs.xaml.cs">
+      <DependentUpon>ProductsDialogs.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>
