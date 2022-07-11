@@ -1,0 +1,12 @@
+/Users/gumby/Projects/EStore22/Library.EStore/bin/Debug/net6.0/Library.EStore.deps.json
+/Users/gumby/Projects/EStore22/Library.EStore/bin/Debug/net6.0/Library.EStore.dll
+/Users/gumby/Projects/EStore22/Library.EStore/bin/Debug/net6.0/Library.EStore.pdb
+/Users/gumby/Projects/EStore22/Library.EStore/obj/Debug/net6.0/Library.EStore.csproj.AssemblyReference.cache
+/Users/gumby/Projects/EStore22/Library.EStore/obj/Debug/net6.0/Library.EStore.GeneratedMSBuildEditorConfig.editorconfig
+/Users/gumby/Projects/EStore22/Library.EStore/obj/Debug/net6.0/Library.EStore.AssemblyInfoInputs.cache
+/Users/gumby/Projects/EStore22/Library.EStore/obj/Debug/net6.0/Library.EStore.AssemblyInfo.cs
+/Users/gumby/Projects/EStore22/Library.EStore/obj/Debug/net6.0/Library.EStore.csproj.CoreCompileInputs.cache
+/Users/gumby/Projects/EStore22/Library.EStore/obj/Debug/net6.0/Library.EStore.dll
+/Users/gumby/Projects/EStore22/Library.EStore/obj/Debug/net6.0/Library.EStore.pdb
+/Users/gumby/Projects/EStore22/Library.EStore/obj/Debug/net6.0/ref/Library.EStore.dll
+/Users/gumby/Projects/EStore22/Library.EStore/bin/Debug/net6.0/ref/Library.EStore.dll
