@@ -1,6 +1,9 @@
-﻿using System;
+using System;
+using Library.Standard.EStore.Utility;
+using Newtonsoft.Json;
 namespace Library.EStore.Models
 {
+    [JsonConverter(typeof(ProductJsonConverter))]
     public partial class ProductByQuantity : Product
     {
 
