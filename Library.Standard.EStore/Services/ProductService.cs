@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Library.EStore.Models;
 using Newtonsoft.Json;
+using System.IO;
+using Library.Standard.EStore.Utility;
 
 namespace Library.EStore.Services
 {
@@ -20,7 +22,8 @@ namespace Library.EStore.Services
 		{
 			get
 			{
-				return productsList;
+                var productsJson = new WebRequestHandler().Get("http://23.25.176.177/Products");
+                return productsList;
 			}
 		}
 
@@ -56,21 +59,50 @@ namespace Library.EStore.Services
 		private ProductService()
 		{
 
-			productsList = new List<Product>();
+			var productsJson = new WebRequestHandler().Get("http://23.25.176.177/Products").Result;
+			productsList = JsonConvert.DeserializeObject<List<Product>>(productsJson);
+
+
+			//productsList = new List<Product>();
 
 
 		}
 
 		public void Create(Product product)
 		{
-			if(product.Id <= 0)
+			if(product is Product)
             {
-				product.Id = NextId;
-				Products.Add(product);
+				var response = new WebRequestHandler().Post("http://23.25.176.177/Create", product as Product).Result;
+				var newProduct = JsonConvert.DeserializeObject<Product>(response);
 
-            }
-			//product.Id = NextId;
-			//Products.Add(product);
+				var oldVersion = productsList.FirstOrDefault(i => i.Id == newProduct.Id);
+
+				if(oldVersion != null)
+                {
+					var index = productsList.IndexOf(oldVersion);
+					productsList.RemoveAt(index);
+
+					productsList.Insert(index, newProduct);
+                }
+				productsList.Add(newProduct);
+
+			}
+			else if (product is ProductByQuantity)
+            {
+				var response = new WebRequestHandler().Post("http://23.25.176.177/ProductsByQuantity", product as Product).Result;
+				var newProduct = JsonConvert.DeserializeObject<ProductByQuantity>(response);
+				productsList.Add(newProduct);
+
+			}
+			else if(product is ProductByWeight)
+            {
+				var response = new WebRequestHandler().Post("http://23.25.176.177/ProductsByWeight", product as Product).Result;
+				var newProduct = JsonConvert.DeserializeObject<ProductByWeight>(response);
+				productsList.Add(newProduct);
+
+			}
+
+
 		}
 
 		public void Update(Product product)
@@ -78,15 +110,23 @@ namespace Library.EStore.Services
 
 		}
 
-		public void Delete(double id)
+		public void Delete(int id)
 		{
+
+			//if (productDelete == null)
+			//{
+			//	return;
+			//}
+
+			//productsList.Remove(productDelete);
+
+			var response = new WebRequestHandler().Get("http://23.25.176.177/Products/Delete/{id}");
 			var productDelete = productsList.FirstOrDefault(t => t.Id == id);
 
-			if (productDelete == null)
-			{
+			if(productDelete == null)
+            {
 				return;
-			}
-
+            }
 			productsList.Remove(productDelete);
 		}
 
