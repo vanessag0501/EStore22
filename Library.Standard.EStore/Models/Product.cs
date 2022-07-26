@@ -1,12 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using Library.EStore.Interfaces;
+using Library.Standard.EStore.Utility;
+using Newtonsoft.Json;
 
 namespace Library.EStore.Models
 {
+    [JsonConverter(typeof(ProductJsonConverter))]
     public class Product
     {
 
