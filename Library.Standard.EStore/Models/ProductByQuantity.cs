@@ -4,30 +4,32 @@ using Newtonsoft.Json;
 namespace Library.EStore.Models
 {
     [JsonConverter(typeof(ProductJsonConverter))]
-    public partial class ProductByQuantity : Product
+    public partial class ProductByWeight : Product
     {
 
-        public double Quantity { get; set; }
+        public double Weight
+        {
+            get;
+            set;
+
+        }
 
         public double totalPrice
         {
             get
             {
-                return price * Quantity;
+                return price * Weight;
             }
         }
 
 
-        public ProductByQuantity()
+        public ProductByWeight()
         {
         }
 
         public override string ToString()
         {
-            return $"{Id} :: {name} :: {description} :: ${price} ::" +
-                $" {Quantity} :: ${totalPrice} ";
+            return $"{Id} :: {name} :: {description} :: ${price} :: {Weight} LB :: ${totalPrice} ";
         }
     }
 }
-
-
