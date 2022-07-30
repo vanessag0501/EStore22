@@ -1,123 +1,66 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using Library.EStore.Models;
 
-namespace Api.ToDoApplication.Persistence
+namespace EStoreApplication.API.Database
 {
-    public class Filebase
-    {
-        private string _root;
-        private string _appointmentRoot;
-        private string _todoRoot;
-        private Filebase _instance;
+	public static class eStoreDatabase
+	{
 
-
-        public Filebase Current
-        {
+		public static List<Product> products {
             get
             {
-                if(_instance == null)
-                {
-                    _instance = new Filebase();
-                }
+				var returnList = new List<Product>();
+				productByQuantities.ForEach(returnList.Add);
+				productByWeights.ForEach(returnList.Add);
 
-                return _instance;
-            }
-        }
+				return returnList;
+			}
 
-        private Filebase()
-        {
-            _root = "C:\temp";
-            _appointmentRoot = $"{_root}\\Appointments";
-            _todoRoot = $"{_root}\\ToDos";
-        }
+		}
 
-        public Item AddOrUpdate(Item item)
-        {
-            //set up a new Id if one doesn't already exist
-            if(string.IsNullOrEmpty(item.Id))
-            {
-                item.Id = Guid.NewGuid().ToString();
-            }
 
-            //go to the right place]
-            string path;
-            if (item is ToDo)
-            {
-                path = $"{_todoRoot}/{item.Id}.json";
-            } else
-            {
-                path = $"{_appointmentRoot}/{item.Id}.json";
-            }
+		public static List<ProductByQuantity> productByQuantities = new List<ProductByQuantity>
+		{
+			new ProductByQuantity{name = "Test Product1", description = "Description 1",Id=1},
+			new ProductByQuantity{name = "Test Product1", description = "Description 2",Id=2}
 
-            //if the item has been previously persisted
-            if(File.Exists(path))
-            {
-                //blow it up
-                File.Delete(path);
-            }
+		};
 
-            //write the file
-            File.WriteAllText(path, JsonConvert.SerializeObject(item));
+		public static List<ProductByWeight> productByWeights = new List<ProductByWeight>
+		{
+			new ProductByWeight{name ="test product weight", description = "description weight", Id =3}
+		};
 
-            //return the item, which now has an id
-            return item;
-        }
+		public static int NextId
+		{
+            get{
+		
+				return products.Select(t => t.Id).Max() + 1;
 
-        public List<ToDo> ToDos
-        {
+			}
+
+
+		}
+		private static Dictionary<string, List<Product>> _carts;
+
+		public static Dictionary<string, List<Product>> Carts {
             get
             {
-                var root = new DirectoryInfo(_todoRoot);
-                var _todos = new List<ToDo>();
-                foreach(var todoFile in root.GetFiles())
+				if(_carts == null)
                 {
-                    var todo = JsonConvert.DeserializeObject<ToDo>(File.ReadAllText(todoFile.FullName));
-                    _todos.Add(todo);
+					_carts = new Dictionary<string, List<Product>>();
                 }
-                return _todos;
+				return _carts;
             }
-        }
 
-        public List<Appointment> Appointments
-        {
-            get
+            set
             {
-                var root = new DirectoryInfo(_appointmentRoot);
-                var _apps = new List<Appointment>();
-                foreach (var appFile in root.GetFiles())
-                {
-                    var app = JsonConvert.DeserializeObject<Appointment>(File.ReadAllText(appFile.FullName));
-                    _apps.Add(app);
-                }
-                return _apps;
+				_carts = value;
             }
-        }
 
-        public bool Delete(string type, string id)
-        {
-            //TODO: refer to AddOrUpdate for an idea of how you can implement this.
-            return true;
-        }
-    }
+		}
 
 
-    // ------------------- FAKE MODEL FILES, REPLACE THESE WITH A REFERENCE TO YOUR MODELS -------- //
-    public class Item
-    {
-        public string Id { get; set; }
-    }
 
-    public class ToDo : Item
-    {
-
-    }
-
-    public class Appointment : Item
-    {
-
-    }
+	}
 }
+
