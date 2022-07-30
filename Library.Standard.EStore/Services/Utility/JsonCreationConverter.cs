@@ -1,47 +1,35 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Library.Standard.EStore.Utility
+using Library.Standard.EStore.Utility;
+using Newtonsoft.Json;
+namespace Library.EStore.Models
 {
-    public abstract class JsonCreationConverter<T> : JsonConverter
+    [JsonConverter(typeof(ProductJsonConverter))]
+    public partial class ProductByWeight : Product
     {
 
-        public override bool CanWrite
+        public double Weight
+        {
+            get;
+            set;
+
+        }
+
+        public double totalPrice
         {
             get
             {
-                return false;
+                return price * Weight;
             }
         }
 
-        protected abstract T Create(Type objectType, JObject jObject);
 
-        public override bool CanConvert(Type objectType)
+        public ProductByWeight()
         {
-            return typeof(T).IsAssignableFrom(objectType);
         }
 
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override string ToString()
         {
-            if (reader == null) throw new ArgumentNullException("reader");
-            if (serializer == null) throw new ArgumentNullException("serializer");
-            if (reader.TokenType == JsonToken.Null)
-                return null;
-
-            JObject jObject = JObject.Load(reader);
-            T target = Create(objectType, jObject);
-            serializer.Populate(jObject.CreateReader(), target);
-            return target;
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
+            return $"{Id} :: {name} :: {description} :: ${price} :: {Weight} LB :: ${totalPrice} ";
         }
     }
 }
